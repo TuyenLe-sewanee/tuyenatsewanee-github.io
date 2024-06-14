@@ -96,3 +96,22 @@ View(top_10)
 
 ggplot( top_10, aes(x= word, y=n)) +
   geom_col()
+
+# join word_freg with sentiments
+
+sentiment_freg <- left_join(word_freg, sentiments, by = 'word')
+
+View(sentiment_freg)
+
+# create an object with n of - and + words used for each person
+
+pos_and_neg <- left_join(words, sentiment_freg, by = 'word')
+
+View(pos_and_neg)
+
+pos_and_neg %>% group_by(first_name)
+
+pos_and_neg %>%  group_by(first_name) %>% 
+  group_by(sentiment) 
+
+table(pos_and_neg$first_name, pos_and_neg$sentiment)
